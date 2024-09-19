@@ -6,7 +6,7 @@ Classes, Inheritance and Objects in Python.
 # CREATING RECTANGLE CLASS
 
 class Rectangle:
-    num_of_rectangles = 0 # classe variable
+    num_of_rectangles = 0 # class variable
 
     def __init__(self, width, high):
         """
