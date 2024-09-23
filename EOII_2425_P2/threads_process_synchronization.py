@@ -86,8 +86,11 @@ class Graphic():
         self.fig = plt.figure()
         self.ax  = self.fig.add_subplot(111)
         self.hl  = plt.plot(self.graphic_data)
+        plt.title("Threads process synchronization")
         plt.ylim(MIN_VALUE - 1, MAX_VALUE + 1)
+        plt.ylabel("shared_variable value")
         plt.xlim(0, len(v))
+        plt.xlabel("time")
         plt.show()
 
 # ---------------------------------------------------------------------------- #
@@ -149,6 +152,7 @@ consumer_thread = threading.Thread(name='Consumer',
                                    args=(container, NUM_DEC))
 
 # Start threads
+visualize = True
 visualizer_thread.start()
 producer_thread.start()
 consumer_thread.start()
