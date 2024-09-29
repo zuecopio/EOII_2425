@@ -1,5 +1,10 @@
 """
-Thread-based application accessing a shared variable synchronously.
+@file     threads_process_synchronization.py
+
+@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@date     September, 2024
+@section  EOII-GIIROB
+@brief    Thread-based application accessing a shared variable synchronously.
 """
 
 # ---------------------------------------------------------------------------- #

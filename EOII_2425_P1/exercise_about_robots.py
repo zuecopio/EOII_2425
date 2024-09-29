@@ -1,9 +1,14 @@
 """
-EXERCISE ABOUT ROBOTS
+@file     exercise_about_robots.py
 
-Create three robots, each as an independent thread. The robots have an ID,
-color, current position, and position to reach. The position is a coordinate on the x and y axes. The threads should simulate the movement of the robots towards their target position and
-should be created as a class that inherits from Thread.
+@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@date     September, 2024
+@section  EOII-GIIROB
+@brief    Create three robots, each as an independent thread. The robots have
+          an ID, color, current position, and position to reach. The position
+          is a coordinate on the x and y axes. The threads should simulate the
+          movement of the robots towards their target position and should be
+          created as a class that inherits from Thread.
 """
 
 # ---------------------------------------------------------------------------- #

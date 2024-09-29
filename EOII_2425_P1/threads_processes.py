@@ -1,5 +1,10 @@
 """
-Threads and processes in Python.
+@file     threads_processes.py
+
+@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@date     September, 2024
+@section  EOII-GIIROB
+@brief    Threads and processes in Python.
 """
 
 # ---------------------------------------------------------------------------- #

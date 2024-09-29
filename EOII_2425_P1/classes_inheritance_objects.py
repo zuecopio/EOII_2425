@@ -1,5 +1,10 @@
 """
-Classes, Inheritance and Objects in Python.
+@file     classes_inheritance_objects.py
+
+@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@date     September, 2024
+@section  EOII-GIIROB
+@brief    Classes, Inheritance and Objects in Python.
 """
 
 # ---------------------------------------------------------------------------- #
