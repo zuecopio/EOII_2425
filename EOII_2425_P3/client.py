@@ -37,9 +37,7 @@ if __name__ == '__main__':
     
     # Set a timeout of 5 seconds
     udp_socket.settimeout(5)
-    
-    message = ""
-    
+       
     while True:
         
         message = input(HEADER + "Write a message: " + RESET)
