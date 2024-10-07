@@ -1,5 +1,5 @@
 """
-@file     server.py
+@file     udp_server.py
 
 @author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
 @date     September, 2024
@@ -10,9 +10,9 @@
 # ---------------------------------------------------------------------------- #
 # NEEDED IMPORTS
 
-import socket
 from datetime import datetime
 import pickle
+import socket
 
 # ---------------------------------------------------------------------------- #
 # COLOR DEFINES
@@ -38,14 +38,28 @@ if __name__ == '__main__':
     
     # Bind the socket to the server address and port
     udp_socket.bind(server_address)
+
+    # Server status variable
+    server_on = True
     
-    while True:
+    while server_on:
         
-        # Receive a message from client
-        data, client_adress = udp_socket.recvfrom(4096)
+        # Receive a message from client ----------------------------------------
+        data, client_address = udp_socket.recvfrom(4096)
         print(HEADER + "Message received from client:" + RESET, data.decode())
-            
-        if data.decode() == "request serialized message":
+        
+        # If client is closed do not send anything -----------------------------
+        if (data.decode()).lower() == "close client":
+            pass
+
+        # If server has been asked to close, then say goodbye ------------------
+        elif ((data.decode()).lower() == "close server" or
+              (data.decode()).lower() == "close client and server"):
+            print(HEADER + "Goodbye!" + RESET)
+            server_on = False
+
+        # Send message using (pickle.dumps) ------------------------------------
+        elif (data.decode()).lower() == "request serialized message":
             # Data to send (a list of numbers)
             unserialized_msg = [1, 2, 3, 4, 5]
             
@@ -54,10 +68,11 @@ if __name__ == '__main__':
             
             # Send a response to client
             print(HEADER + "Sending serialized message to client..." + RESET)
-            udp_socket.sendto(serialized_msg, client_adress)
-            
+            udp_socket.sendto(serialized_msg, client_address)
+        
+        # Send message using (encode) ------------------------------------------
         else:
-            if data.decode() == "TIME":
+            if (data.decode()).lower() == "time":
                 # Get the current time
                 current_time = datetime.now().time()
                 # Convert the current time to a string in the format hh:mm:ss
@@ -67,9 +82,9 @@ if __name__ == '__main__':
             
             # Send a response to client
             print(HEADER + "Sending message to client..." + RESET)
-            udp_socket.sendto(message.encode(), client_adress)
+            udp_socket.sendto(message.encode(), client_address)
     
-    # Close socket
+    # Close socket -------------------------------------------------------------
     udp_socket.close()
         
     ### end def __name__() ###
