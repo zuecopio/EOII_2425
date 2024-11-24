@@ -99,10 +99,15 @@ class udpClient(threading.Thread):
                 # Deserialize the data using (decode)
                 data = raw_data.decode()
 
-        except socket.timeout:
+        except (socket.timeout, ConnectionResetError) as error:
             # If the server does not respond within 5
             # seconds, a warning will be sent
             data = "The server has not responded in 5 seconds"
+            if isinstance(error, socket.timeout):
+                data = "The server has not responded in 5 seconds"
+            else:
+                data = ("Connection error: The remote"
+                        " host has closed the connection.")
         
         return data
 

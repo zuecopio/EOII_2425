@@ -19,10 +19,10 @@ import paho.mqtt.client as mqtt
 # ---------------------------------------------------------------------------- #
 # PARAMETERS AND TOPICS FOR CONNECTION WITH MQTT
 
-BROKER   = 'broker.emqx.io'
+BROKER   = 'localhost'
 PORT     =  1883
-USERNAME = 'emqx'
-PASSWORD = 'public'
+# USERNAME = 'emqx'
+# PASSWORD = 'public'
 
 TOPICS = {
     "Robot1": "Robot1/target_pos",

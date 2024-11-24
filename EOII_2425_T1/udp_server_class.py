@@ -122,7 +122,9 @@ class udpServer(threading.Thread):
                 data, client_address = self.udp_socket.recvfrom(4096)
                 self.showClientMessage(data.decode())
 
-            except socket.timeout:
+            except (socket.timeout, RuntimeError):
+                # socket.timeout: when the timeout period expires
+                # RuntimeError: when main thread is not in main loop
                 data = None
             
             self.recievingMessage = False
