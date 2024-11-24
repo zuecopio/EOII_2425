@@ -1,7 +1,7 @@
 """
 @file     exercise_about_robots.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     September, 2024
 @section  EOII-GIIROB
 @brief    Create three robots, each as an independent thread. The robots have
@@ -14,8 +14,7 @@
 # ---------------------------------------------------------------------------- #
 # NECESSARY IMPORTS
 
-import threading
-import time
+import threading  # Import threading module for creating and managing threads
 
 # ---------------------------------------------------------------------------- #
 # CREATING ROBOT CLASS
@@ -76,26 +75,30 @@ class Robot(threading.Thread):
         ### end def run() ###
 
 # ---------------------------------------------------------------------------- #
-# CREATING ROBOT THREADS
+# MAIN FUNCTION
 
-robot1 = Robot(id=1, name="Robot 1", color="White", start_pos=[0, 0], target_pos=[7, 4])
-robot2 = Robot(id=2, name="Robot 2", color="Green", start_pos=[3, 5], target_pos=[1, 2])
-robot3 = Robot(id=3, name="Robot 3", color="Black", start_pos=[6, 2], target_pos=[8, 6])
+if __name__ == '__main__':
+    """
+    This bla bla
+    """
+    # CREATING ROBOT THREADS
 
-# ---------------------------------------------------------------------------- #
-# STARTING ROBOT THREADS
+    robot1 = Robot(id=1, name="Robot 1", color="White", start_pos=[0, 0], target_pos=[7, 4])
+    robot2 = Robot(id=2, name="Robot 2", color="Green", start_pos=[3, 5], target_pos=[1, 2])
+    robot3 = Robot(id=3, name="Robot 3", color="Black", start_pos=[6, 2], target_pos=[8, 6])
 
-robot1.start()
-robot2.start()
-robot3.start()
+    # STARTING ROBOT THREADS
 
-# ---------------------------------------------------------------------------- #
-# WAIT UNTIL ALL ROBOTS FINISH
+    robot1.start()
+    robot2.start()
+    robot3.start()
 
-robot1.join()
-robot2.join()
-robot3.join()
+    # WAIT UNTIL ALL ROBOTS FINISH
 
-print("All robots have reached their target positions.")
+    robot1.join()
+    robot2.join()
+    robot3.join()
+
+    print("All robots have reached their target positions.")
 
 # end of file #

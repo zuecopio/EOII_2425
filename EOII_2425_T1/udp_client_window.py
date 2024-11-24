@@ -1,7 +1,7 @@
 """
 @file     udp_client_window.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     October, 2024
 @section  EOII-GIIROB
 @brief    UDP Client Window implementation using tkinter.
@@ -11,8 +11,8 @@
 # NEEDED IMPORTS
 
 import ipaddress
-from styles import *
-from tkinter import messagebox
+from   styles  import *
+from   tkinter import messagebox
 import tkinter as tk
 import udp_client_class as udp_c
 

@@ -14,9 +14,9 @@
 import json
 import pickle
 import socket
-from styles import BUTTON_BG_COLOR
+from   styles  import BUTTON_BG_COLOR
 import threading
-from time import sleep
+from   time    import sleep
 import tkinter as tk
 
 # ---------------------------------------------------------------------------- #
@@ -81,7 +81,8 @@ class udpClient(threading.Thread):
             
             # Case 2: waiting for a (json) type message ------------------------
 
-            elif (self.clientMessage).lower() == "request json serialized message":
+            elif ((self.clientMessage).lower() == 
+                  "request json serialized message"):
                 # Deserialize the data using (json.loads)
                 jsonData = json.loads(raw_data)
 
@@ -154,10 +155,12 @@ class udpClient(threading.Thread):
 
                         self.message2recv = False
 
-                        # Check if client has been powered off during the timeout
+                        # Check if client has been powered
+                        # off during the timeout
                         if self.client_on == True:
                             self.output_text.insert(tk.END, data + "\n")
-                            # Adjust scrollbar position to always show the last text
+                            # Adjust scrollbar position to
+                            # always show the last text
                             self.output_text.yview_moveto(1.0)
 
                             # Restore normal appearance of message button

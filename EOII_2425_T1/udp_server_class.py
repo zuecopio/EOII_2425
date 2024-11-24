@@ -1,7 +1,7 @@
 """
 @file     udp_server_class.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     October, 2024
 @section  EOII-GIIROB
 @brief    UDP Server Class code implementation
@@ -11,12 +11,12 @@
 # ---------------------------------------------------------------------------- #
 # NEEDED IMPORTS
 
-from datetime import datetime
+from   datetime import datetime
 import json
 import pickle
 import socket
 import threading
-from time import sleep
+from   time    import sleep
 import tkinter as tk
 
 # ---------------------------------------------------------------------------- #
@@ -88,7 +88,7 @@ class udpServer(threading.Thread):
                     
                     if char in vowels:  # Check if it is a vowel
                         num_vowels += 1
-                    else:  # Si es letra pero no vocal, entonces es consonante
+                    else:  # If not, then it is a consonant
                         num_consonants += 1
             
             message = ("Letters: "      + str(num_letters) +
@@ -116,7 +116,7 @@ class udpServer(threading.Thread):
 
         while self.server_on == True:
             
-            # Receive a message from client ----------------------------------------
+            # Receive a message from client ------------------------------------
             self.recievingMessage = True
             try:
                 data, client_address = self.udp_socket.recvfrom(4096)
@@ -148,25 +148,30 @@ class udpServer(threading.Thread):
                     self.udp_socket.sendto(serialized_msg, client_address)
                 
                 # Send message using (json.dumps) ------------------------------
-                elif (data.decode()).lower() == "request json serialized message":
+                elif ((data.decode()).lower() ==
+                      "request json serialized message"):
                     # Create the message in JSON format
                     unserialized_msg = {
                         "temperature": 22,
-                        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        "timestamp": (datetime.now()
+                                      .strftime("%Y-%m-%d %H:%M:%S"))
                     }
                     
                     # Serialize msg using json.dumps()
                     serialized_msg = json.dumps(unserialized_msg)
                     
                     # Send a response to client
-                    self.udp_socket.sendto(serialized_msg.encode(), client_address)
+                    self.udp_socket.sendto(
+                        serialized_msg.encode(), 
+                        client_address)
                 
                 # Send message using (encode) ----------------------------------
                 else:
                     if (data.decode()).lower() == "time":
                         # Get the current time
                         current_time = datetime.now().time()
-                        # Convert the current time to a string in the format hh:mm:ss
+                        # Convert the current time to a
+                        # string in the format hh:mm:ss
                         message = current_time.strftime('%H:%M:%S')       
                     else:
                         message = "Nothing to say"

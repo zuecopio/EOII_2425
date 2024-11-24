@@ -1,7 +1,7 @@
 """
 @file     tcp_server.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     October, 2024
 @section  EOII-GIIROB
 @brief    TCP Server Code Implementation.
@@ -10,17 +10,17 @@
 # ---------------------------------------------------------------------------- #
 # NEEDED IMPORTS
 
-from datetime import datetime
-import pickle
-import socket
+from datetime import datetime  # For handling date and time
+import pickle  # For serializing and deserializing Python objects
+import socket  # For network communication using sockets
 
 # ---------------------------------------------------------------------------- #
 # COLOR DEFINES
 
-YELLOW = "\033[93m"
-BOLD = "\033[1m"
-RESET = "\033[0m"
-HEADER = BOLD + YELLOW + "(SERVER) " + RESET + YELLOW
+YELLOW = "\033[93m"  # Define yellow color for console output
+BOLD   = "\033[1m"   # Define bold text format
+RESET  = "\033[0m"   # Define reset format for console output
+HEADER = BOLD + YELLOW + "(SERVER) " + RESET + YELLOW  # Header format
 
 # ---------------------------------------------------------------------------- #
 # SERVER
@@ -121,7 +121,5 @@ if __name__ == '__main__':
     # Close socket -------------------------------------------------------------
     connection.close()
     tcp_socket.close()
-        
-    ### end def __name__() ###
 
 # end of file #

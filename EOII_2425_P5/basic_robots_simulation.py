@@ -1,46 +1,46 @@
 """
 @file     basic_robots_simulation.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     October, 2024
 @section  EOII-GIIROB
-@brief    Basic Robots Simulation.
+@brief    Basic Robots Simulation for controlling robot movements.
 """
 
 # ---------------------------------------------------------------------------- #
 # NEEDED IMPORTS
 
-import json
-import threading
-import time
-import tkinter as tk
-import paho.mqtt.client as mqtt
+import json                      # For handling JSON data
+import threading                 # For concurrent execution of threads
+import time                      # For time-related functions
+import tkinter as tk             # For creating the GUI
+import paho.mqtt.client as mqtt  # For MQTT communication
 
 # ---------------------------------------------------------------------------- #
 # PARAMETERS AND TOPICS FOR CONNECTION WITH MQTT
 
-BROKER   = 'localhost'
-PORT     =  1883
-# USERNAME = 'emqx'
-# PASSWORD = 'public'
+BROKER = "localhost"  # Address of the MQTT broker
+PORT   = 1883  # Port number for the MQTT broker
 
+# Define MQTT topics for each robot's target position
 TOPICS = {
     "Robot1": "Robot1/target_pos",
     "Robot2": "Robot2/target_pos",
     "Robot3": "Robot3/target_pos"
 }
 
+# Define target positions for each robot
 target_positions = {
-    "Robot1": {"x": 15, "y":  5},
-    "Robot2": {"x": 20, "y": 30},
-    "Robot3": {"x": 40, "y": 40}
+    "Robot1": {"x": 15, "y":  5},  # Target position for Robot1
+    "Robot2": {"x": 20, "y": 30},  # Target position for Robot2
+    "Robot3": {"x": 40, "y": 40}   # Target position for Robot3
 }
 
 # ---------------------------------------------------------------------------- #
 # GLOBAL VARIABLES
 
-WINDOW_SIZE = 50
-ROBOT_SIZE  = 10
+WINDOW_SIZE = 50  # Size of the simulation window
+ROBOT_SIZE  = 10  # Size of each robot in the simulation
 
 # ---------------------------------------------------------------------------- #
 # ROBOT OBJECT CLASS
@@ -67,46 +67,74 @@ class Robot(threading.Thread):
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
         self.client.loop_start()
+        
+        ### end def __init__() ###
 
     def on_connect(self, client, userdata, flags, rc):
-        print(f"{self.name} successfully connected")
-        # Subscribe to the corresponding topic to receive the objective
+        """
+        Callback for when the client successfully connects to the MQTT broker.
+        """
+        print(f"{self.name} successfully connected")  # Log connection success
+        # Subscribe to the corresponding topic to receive target position updates
         self.client.subscribe(TOPICS[self.name])
         
+        ### end def on_connect() ###
+
     def on_message(self, client, userdata, message):
-        objetive = json.loads(message.payload.decode())
-        self.target_pos = [objetive["x"], objetive["y"]]
-        print(f"Target of {self.name}: {self.target_pos}")
+        """
+        Callback for when a message is received from the subscribed topic.
+        """
+        # Decode the message payload and load it as a JSON object
+        objective = json.loads(message.payload.decode())
+        # Update the target position based on the received message
+        self.target_pos = [objective["x"], objective["y"]]
+        print(f"Target of {self.name}: {self.target_pos}")  # Log the target position
+        
+        ### end def on_message() ###
         
     def run(self):
         """
         Defines the logic of the robot's movement from its current position
         to its target. This method runs on a separate thread for each robot.
         """
-        while self.target_pos == None:
-            time.sleep(0.1)
+        # Wait until the target position is set
+        while self.target_pos is None:
+            time.sleep(0.1)  # Sleep briefly to avoid busy waiting
 
-        print(f"{self.name} ({self.color}) - Starting in position {self.current_pos} with target {self.target_pos}")
+        print(f"{self.name} ({self.color}) - "
+              f"Starting in position {self.current_pos} "
+              f"with target {self.target_pos}")
         
-        # The robot is represented as a circle on the canvas
+        # Represent the robot as a circle on the canvas
         self.robot_shape = self.canvas.create_oval(
-            self.current_pos[0] * self.robot_size, self.current_pos[1] * self.robot_size, 
-            (self.current_pos[0] + 1) *  self.robot_size, (self.current_pos[1] + 1) * self.robot_size,
+            self.current_pos[0] * self.robot_size,
+            self.current_pos[1] * self.robot_size, 
+            (self.current_pos[0] + 1) * self.robot_size,
+            (self.current_pos[1] + 1) * self.robot_size,
             fill=self.color
         )
-        # represent the target
+        
+        # Represent the target position as a rectangle on the canvas
         self.target_shape = self.canvas.create_rectangle(
-            self.target_pos[0] * self.robot_size, self.target_pos[1] * self.robot_size, 
-            (self.target_pos[0] + 1) *  self.robot_size, (self.target_pos[1] + 1) * self.robot_size,
-            fill=self.color)
+            self.target_pos[0] * self.robot_size,
+            self.target_pos[1] * self.robot_size, 
+            (self.target_pos[0] + 1) * self.robot_size,
+            (self.target_pos[1] + 1) * self.robot_size,
+            fill=self.color
+        )
 
+        # Move the robot towards the target until it reaches the target position
         while self.current_pos != self.target_pos and not self._stop_event.is_set():
             self.move_towards_target()
             self.update_position_on_canvas()
             time.sleep(0.5)  # Pause to simulate movement
             
+        # Check if the stop event has not been triggered
         if not self._stop_event.is_set():
-            print(f"{self.name} ({self.color}) - Has reached the position {self.target_pos}!")
+            print(f"{self.name} ({self.color}) "
+                  f"- Has reached the position {self.target_pos}!")
+        
+        ### end def run() ###
 
     def move_towards_target(self):
         """
@@ -124,6 +152,8 @@ class Robot(threading.Thread):
             self.current_pos[1] += 1
         elif self.current_pos[1] > self.target_pos[1]:
             self.current_pos[1] -= 1
+        
+        ### end def move_towards_target() ###
 
     def update_position_on_canvas(self):
         """
@@ -131,15 +161,20 @@ class Robot(threading.Thread):
         """
         self.canvas.coords(
             self.robot_shape,
-            self.current_pos[0] * self.robot_size, self.current_pos[1] * self.robot_size,
-            (self.current_pos[0] + 1) * self.robot_size, (self.current_pos[1] + 1) * self.robot_size
-        )
+            self.current_pos[0] * self.robot_size,
+            self.current_pos[1] * self.robot_size,
+            (self.current_pos[0] + 1) * self.robot_size,
+            (self.current_pos[1] + 1) * self.robot_size)
+        
+        ### end def update_position_on_canvas() ###
 
     def stop(self):
         """
         Stops the robot's movement when called.
         """
         self._stop_event.set()
+        
+        ### end def stop() ###
 
 # ---------------------------------------------------------------------------- #
 # ROBOT SIMULATOR APP OBJECT CLASS
@@ -154,11 +189,17 @@ class RobotSimulatorApp:
         self.root.title("Robots Simulator")
 
         # Create the canvas where the robots will move
-        self.canvas = tk.Canvas(self.root, width=ROBOT_SIZE*WINDOW_SIZE, height=ROBOT_SIZE*WINDOW_SIZE)
+        self.canvas = tk.Canvas(
+            self.root, 
+            width=ROBOT_SIZE*WINDOW_SIZE,
+            height=ROBOT_SIZE*WINDOW_SIZE)
         self.canvas.pack()
 
         # Button to start the simulation
-        self.start_button = tk.Button(self.root, text="Start Simulation", command=self.start_simulation)
+        self.start_button = tk.Button(
+            self.root,
+            text="Start Simulation",
+            command=self.start_simulation)
         self.start_button.pack(pady=10)
 
         # Create the robots and show their initial position
@@ -172,7 +213,9 @@ class RobotSimulatorApp:
 
         # MQTT publisher configuration
         self.client = mqtt.Client("simulator")
-        self.client.connect(BROKER, PORT, 60)  
+        self.client.connect(BROKER, PORT, 60)
+        
+        ### end def __init__() ###  
 
     def display_initial_positions(self):
         """
@@ -182,16 +225,21 @@ class RobotSimulatorApp:
         # Draw the robots in their initial position (without moving yet)
         for robot in self.robots:
             robot.robot_shape = self.canvas.create_oval(
-                robot.current_pos[0] * robot.robot_size, robot.current_pos[1] * robot.robot_size,
-                (robot.current_pos[0] + 1) * robot.robot_size, (robot.current_pos[1] + 1) * robot.robot_size,
-                fill=robot.color
-            )
+                robot.current_pos[0] * robot.robot_size,
+                robot.current_pos[1] * robot.robot_size,
+                (robot.current_pos[0] + 1) * robot.robot_size,
+                (robot.current_pos[1] + 1) * robot.robot_size,
+                fill = robot.color)
+        
+        ### end def display_initial_positions() ###
 
     def publish_objetive(self, robot_name, target_pos):
         """
         Publish robot targets in JSON format at the start of the simulation.
         """
         self.client.publish(TOPICS[robot_name], json.dumps(target_pos))
+        
+        ### end def publish_objetive() ###
 
     def start_simulation(self):
         """
@@ -209,25 +257,37 @@ class RobotSimulatorApp:
             robot.start()
         # Disable the button so that only one simulation can be done
         self.start_button["state"] = "disabled"
+        
+        ### end def start_simulation() ###
     
     def stop_simulation(self):
         """
-        Stops all robots if necessary.
+        Stops all robots if necessary by calling their stop method.
         """
-        for robot in self.robots:
-            robot.stop()
+        for robot in self.robots:  # Iterate through each robot in the list
+            robot.stop()  # Stop the current robot
+            
+        ### end def stop_simulation() ###
 
     def on_closing(self):
         """
-        Stops the simulation and closes the application window.
+        Stops the simulation and closes the application window gracefully.
         """
-        self.stop_simulation()
-        self.root.destroy()
+        self.stop_simulation()  # Call method to stop all robots
+        self.root.destroy()  # Close the main application window
+        
+        ### end def on_closing() ###
 
 # ---------------------------------------------------------------------------- #
-# CREATE YHE MAIN WINDOW AND RUN THE SIMULATOR
-root = tk.Tk()
-app = RobotSimulatorApp(root)
-root.mainloop()
+# CREATE THE MAIN WINDOW AND RUN THE SIMULATOR
+
+if __name__ == '__main__':
+    """
+    Entry point for the application. Initializes the main window and starts
+    the robot simulator application.
+    """
+    root = tk.Tk()                 # Create the main application window
+    app = RobotSimulatorApp(root)  # Initialize the robot simulator app
+    root.mainloop()                # Start the Tkinter event loop to run the app
 
 # end of file #

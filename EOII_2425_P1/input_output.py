@@ -1,7 +1,7 @@
 """
 @file     input_output.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     September, 2024
 @section  EOII-GIIROB
 @brief    Input and output I/O in Python.

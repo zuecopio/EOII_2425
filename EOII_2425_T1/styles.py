@@ -1,7 +1,7 @@
 """
 @file     styles.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     October, 2024
 @section  EOII-GIIROB
 @brief    Styles for tkinter windows.
@@ -21,9 +21,9 @@ LABEL_FG_COLOR   = "#4D4D4D"  # Label text color
 SECTION_FG_COLOR = "#262626"  # Text color of sections 
 
 # Fonts
-SECTION_FONT   = ("", 12, "bold")
-TEXT_BOLD_FONT = ("", 10, "bold")
-TEXT_FONT      = ("", 10)
-TITLE_FONT     = ("", 22, "bold")
+SECTION_FONT   = ("", 12, "bold")  # Font for section headers
+TEXT_BOLD_FONT = ("", 10, "bold")  # Font for bold text
+TEXT_FONT      = ("", 10)          # Regular font for standard text
+TITLE_FONT     = ("", 22, "bold")  # Font for titles
 
 # end of file #

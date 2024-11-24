@@ -1,7 +1,7 @@
 """
 @file     udp_server_window.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     October, 2024
 @section  EOII-GIIROB
 @brief    UDP Server Window implementation using tkinter.
@@ -10,9 +10,9 @@
 # ---------------------------------------------------------------------------- #
 # NEEDED IMPORTS
 
-from tkinter import messagebox
+from   tkinter import messagebox
 import tkinter as tk
-from styles import *
+from   styles  import *
 import udp_server_class as udp_s
 
 # ---------------------------------------------------------------------------- #

@@ -1,7 +1,7 @@
 """
 @file     hello_world.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     September, 2024
 @section  EOII-GIIROB
 @brief    Hello World program.

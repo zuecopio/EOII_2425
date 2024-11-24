@@ -1,7 +1,7 @@
 """
 @file     threads_processes.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     September, 2024
 @section  EOII-GIIROB
 @brief    Threads and processes in Python.
@@ -10,9 +10,9 @@
 # ---------------------------------------------------------------------------- #
 # NEEDED IMPORTS
 
-import threading
-import time
-import multiprocessing
+import threading        # For creating and managing threads
+import time             # For time-related functions, such as sleep
+import multiprocessing  # For creating and managing separate processes
 
 # ---------------------------------------------------------------------------- #
 # CREATION AND EXECUTION OF 2 THREADS (using threading.Thread)

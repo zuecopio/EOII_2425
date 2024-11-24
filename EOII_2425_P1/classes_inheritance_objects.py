@@ -1,7 +1,7 @@
 """
 @file     classes_inheritance_objects.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     September, 2024
 @section  EOII-GIIROB
 @brief    Classes, Inheritance and Objects in Python.
@@ -70,7 +70,7 @@ class Square(Rectangle):
         ### end def __init__() ###
 
 # ---------------------------------------------------------------------------- #
-# CREATING SQUARE OBJECT & PAYING WITH IT
+# CREATING SQUARE OBJECT & PLAYING WITH IT
 
 square_01 = Square(4)
 

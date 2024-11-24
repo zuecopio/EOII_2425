@@ -1,7 +1,7 @@
 """
 @file     tcp_client.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     October, 2024
 @section  EOII-GIIROB
 @brief    TCP Client Code Implementation.
@@ -10,17 +10,17 @@
 # ---------------------------------------------------------------------------- #
 # NEEDED IMPORTS
 
-import pickle
-import socket
-from time import sleep
+import pickle           # For serializing and deserializing Python objects
+import socket           # For network communication using sockets
+from time import sleep  # For adding delays in execution
 
 # ---------------------------------------------------------------------------- #
 # COLOR DEFINES
 
-PURPLE = "\033[95m"
-BOLD = "\033[1m"
-RESET = "\033[0m"
-HEADER = BOLD + PURPLE + "(CLIENT) " + RESET + PURPLE
+PURPLE = "\033[95m"  # Define purple color for console output
+BOLD   = "\033[1m"   # Define bold text format
+RESET  = "\033[0m"   # Define reset format for console output
+HEADER = BOLD + PURPLE + "(CLIENT) " + RESET + PURPLE  # Header format 
 
 # ---------------------------------------------------------------------------- #
 # CLIENT
@@ -109,7 +109,5 @@ if __name__ == '__main__':
 
     # Close socket -------------------------------------------------------------
     tcp_socket.close()
-        
-    ### end def __name__() ###
 
 # end of file #

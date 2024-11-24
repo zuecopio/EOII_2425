@@ -1,7 +1,7 @@
 """
 @file     threads_process_synchronization.py
 
-@author   Marcos Belda Martinez <mbelmar@etsinf.upv.es>
+@author   Marcos Belda Martinez' <mbelmar@etsinf.upv.es>
 @date     September, 2024
 @section  EOII-GIIROB
 @brief    Thread-based application accessing a shared variable synchronously.
@@ -10,24 +10,24 @@
 # ---------------------------------------------------------------------------- #
 # NEEDED IMPORTS
 
-import threading
-import time
-import matplotlib.pyplot as plt
+import threading                 # For creating and managing threads
+import time                      # For time-related functions, such as sleep
+import matplotlib.pyplot as plt  # For plotting data visualizations
 
-from random import random # returns random number betwen 0 and 1
+from random import random        # Import random function to generate numbers
 
 # ---------------------------------------------------------------------------- #
 # GLOBAL VARIABLES
 
-# Needed variables for Producer & Consumer
-MAX_VALUE = 20
-MIN_VALUE = 0
-NUM_INC   = 20
-NUM_DEC   = 20
+# Variables needed for Producer & Consumer
+MAX_VALUE = 20  # Maximum value for production
+MIN_VALUE = 0   # Minimum value for production
+NUM_INC   = 20  # Number of increments for the producer
+NUM_DEC   = 20  # Number of decrements for the consumer
 
-# Needed variables for Visualizer
-visualize = False
-values = []
+# Variables needed for Visualizer
+visualize = False  # Flag to control visualization
+values    = []     # List to store values for visualization
 
 # ---------------------------------------------------------------------------- #
 # CREATING CONTAINER CLASS
@@ -98,6 +98,8 @@ class Graphic():
         plt.xlabel("time")
         plt.show()
 
+        ### end def __init__() ###
+
 # ---------------------------------------------------------------------------- #
 # VISUALIZER TARGET FUNCTION
 
@@ -140,39 +142,43 @@ def consumer(container, num_dec):
 # ---------------------------------------------------------------------------- #
 # MAIN
 
-# Create Container object
-container = Container()
+if __name__ == '__main__':
+    """
+    This blabla
+    """
+    # Create Container object
+    container = Container()
 
-# Create threads
-visualizer_thread = threading.Thread(name='Visualizer',
-                                     target=visualizer,
-                                     args=(container,)) # <- why the coma is there?
+    # Create threads
+    visualizer_thread = threading.Thread(name='Visualizer',
+                                        target=visualizer,
+                                        args=(container,)) # <- why the coma is there?
 
-producer_thread = threading.Thread(name='Producer',
-                                   target=producer,
-                                   args=(container, NUM_INC))
+    producer_thread = threading.Thread(name='Producer',
+                                    target=producer,
+                                    args=(container, NUM_INC))
 
-consumer_thread = threading.Thread(name='Consumer',
-                                   target=consumer,
-                                   args=(container, NUM_DEC))
+    consumer_thread = threading.Thread(name='Consumer',
+                                    target=consumer,
+                                    args=(container, NUM_DEC))
 
-# Start threads
-visualize = True
-visualizer_thread.start()
-producer_thread.start()
-consumer_thread.start()
+    # Start threads
+    visualize = True
+    visualizer_thread.start()
+    producer_thread.start()
+    consumer_thread.start()
 
-# Wait until producer & consumer threads end
-producer_thread.join()
-consumer_thread.join()
+    # Wait until producer & consumer threads end
+    producer_thread.join()
+    consumer_thread.join()
 
-# Set visualize to false to stop reading more values
-visualize = False
+    # Set visualize to false to stop reading more values
+    visualize = False
 
-# Wait until visualizer thread end
-visualizer_thread.join()
+    # Wait until visualizer thread end
+    visualizer_thread.join()
 
-# Plot the graphic with the readed values
-my_graphic = Graphic(values)
+    # Plot the graphic with the readed values
+    my_graphic = Graphic(values)
 
 # end of file #
