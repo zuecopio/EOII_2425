@@ -22,7 +22,7 @@ Implementación de la ventana del servidor UDP con ```tkinter```. A través de e
 
 Para poner en funcionamiento las aplicaciones, tienen que estar en ejecución los módulos ```udp_client_window.py``` y ```udp_server_window.py```.
 
-Estando dentro de la carpeta del proyecto, abrir una terminal y ejecutar los siguientes comandos para que se inicien las aplicaciones en segundo plano:
+Estando dentro de la carpeta del proyecto, abrir una terminal y ejecutar los siguientes comandos para que se inicien las aplicaciones en segundo plano (funciona en linux):
 
 ```bash
 python3 udp_client_window.py &
