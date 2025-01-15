@@ -1,0 +1,573 @@
+<Tags locale="en">
+   <Tag name="EOII_2425" path="" type="Folder"/>
+   <Tag name="EOII_2425_T2" path="EOII_2425" type="Folder"/>
+   <Tag name="cmd_vel" path="EOII_2425/EOII_2425_T2" type="Folder"/>
+   <Tag name="angular_vector" path="EOII_2425/EOII_2425_T2/cmd_vel" type="OPC">
+      <Property name="Value">
+         <Dataset>
+            <columns>
+               <col name="VALUES" datatype="Float8"/>
+            </columns>
+            <rows>
+               <row>
+                  <cell>0</cell>
+               </row>
+               <row>
+                  <cell>0</cell>
+               </row>
+               <row>
+                  <cell>0</cell>
+               </row>
+            </rows>
+         </Dataset>
+      </Property>
+      <Property name="DataType">13</Property>
+      <Property name="OPCServer">FreeOpcUa Python Server</Property>
+      <Property name="OPCItemPath">ns=2;i=10</Property>
+      <Property name="SourceDataType">13</Property>
+      <EventScripts>
+         <Event id="valueChanged" enabled="true">	# STEP 1: Needed defines ---------------------------------------------------
+
+	# Declare path to simplify code
+	cmd_vel_path = &quot;EOII_2425/EOII_2425_T2/cmd_vel/&quot;
+	
+	# STEP 2: Update Memory Tags with new OPC Tag values -----------------------
+	
+	system.tag.write(
+		cmd_vel_path + &quot;angular_x&quot;,
+		currentValue.value[0])
+		
+	system.tag.write(
+		cmd_vel_path + &quot;angular_y&quot;,
+		currentValue.value[1])
+					
+	system.tag.write(
+		cmd_vel_path + &quot;angular_z&quot;,
+		currentValue.value[2])
+			
+	### end def valueChanged() ###
+	</Event>
+      </EventScripts>
+   </Tag>
+   <Tag name="angular_x" path="EOII_2425/EOII_2425_T2/cmd_vel" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="ScanClass">Default Historical</Property>
+      <Property name="HistoryEnabled">true</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+      <Property name="HistoricalDeadband">0.001</Property>
+   </Tag>
+   <Tag name="angular_y" path="EOII_2425/EOII_2425_T2/cmd_vel" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="ScanClass">Default Historical</Property>
+      <Property name="HistoryEnabled">true</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+      <Property name="HistoricalDeadband">0.001</Property>
+   </Tag>
+   <Tag name="angular_z" path="EOII_2425/EOII_2425_T2/cmd_vel" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="ScanClass">Default Historical</Property>
+      <Property name="HistoryEnabled">true</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+      <Property name="HistoricalDeadband">0.001</Property>
+   </Tag>
+   <Tag name="cmd_vel_msg_counter" path="EOII_2425/EOII_2425_T2/cmd_vel" type="OPC">
+      <Property name="Value">0</Property>
+      <Property name="DataType">3</Property>
+      <Property name="OPCServer">FreeOpcUa Python Server</Property>
+      <Property name="OPCItemPath">ns=2;i=8</Property>
+      <Property name="SourceDataType">3</Property>
+      <EventScripts>
+         <Event id="valueChanged" enabled="true">	# STEP 1: Needed defines ---------------------------------------------------
+
+	# Declare path to simplify code
+	cmd_vel_path = &quot;EOII_2425/EOII_2425_T2/cmd_vel/&quot;
+	
+	# STEP 2: If the server has been restarted, reset Memory Tags --------------
+	
+	if previousValue.value &gt; currentValue.value or currentValue.value == 0:
+	
+		# Reset Linear Velocity Component Memory Tags --------------------------
+
+		system.tag.write(
+			cmd_vel_path + &quot;linear_x&quot;,
+			0.0)
+		system.tag.write(
+			cmd_vel_path + &quot;linear_y&quot;,
+			0.0)
+		system.tag.write(
+			cmd_vel_path + &quot;linear_z&quot;,
+			0.0)
+
+		# Reset Angular Velocity Component Memory Tags -------------------------
+
+		system.tag.write(
+			cmd_vel_path + &quot;angular_x&quot;,
+			0.0)
+		system.tag.write(
+			cmd_vel_path + &quot;angular_y&quot;,
+			0.0)
+		system.tag.write(
+			cmd_vel_path + &quot;angular_z&quot;,
+			0.0)
+			
+	### end def valueChanged() ###
+	</Event>
+      </EventScripts>
+   </Tag>
+   <Tag name="linear_vector" path="EOII_2425/EOII_2425_T2/cmd_vel" type="OPC">
+      <Property name="Value">
+         <Dataset>
+            <columns>
+               <col name="VALUES" datatype="Float8"/>
+            </columns>
+            <rows>
+               <row>
+                  <cell>0</cell>
+               </row>
+               <row>
+                  <cell>0</cell>
+               </row>
+               <row>
+                  <cell>0</cell>
+               </row>
+            </rows>
+         </Dataset>
+      </Property>
+      <Property name="DataType">13</Property>
+      <Property name="OPCServer">FreeOpcUa Python Server</Property>
+      <Property name="OPCItemPath">ns=2;i=9</Property>
+      <Property name="SourceDataType">13</Property>
+      <EventScripts>
+         <Event id="valueChanged" enabled="true">	# STEP 1: Needed defines ---------------------------------------------------
+
+	# Declare path to simplify code
+	cmd_vel_path = &quot;EOII_2425/EOII_2425_T2/cmd_vel/&quot;
+	
+	# STEP 2: Update Memory Tags with new OPC Tag values -----------------------
+
+	system.tag.write(
+		cmd_vel_path + &quot;linear_x&quot;,
+		currentValue.value[0])
+	
+	system.tag.write(
+		cmd_vel_path + &quot;linear_y&quot;,
+		currentValue.value[1])
+			
+	system.tag.write(
+		cmd_vel_path + &quot;linear_z&quot;,
+		currentValue.value[2])
+	
+	### end def valueChanged() ###
+	</Event>
+      </EventScripts>
+   </Tag>
+   <Tag name="linear_x" path="EOII_2425/EOII_2425_T2/cmd_vel" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="ScanClass">Default Historical</Property>
+      <Property name="HistoryEnabled">true</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+   </Tag>
+   <Tag name="linear_y" path="EOII_2425/EOII_2425_T2/cmd_vel" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="ScanClass">Default Historical</Property>
+      <Property name="HistoryEnabled">true</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+   </Tag>
+   <Tag name="linear_z" path="EOII_2425/EOII_2425_T2/cmd_vel" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="ScanClass">Default Historical</Property>
+      <Property name="HistoryEnabled">true</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+   </Tag>
+   <Tag name="pose" path="EOII_2425/EOII_2425_T2" type="Folder"/>
+   <Tag name="angular_velocity_data" path="EOII_2425/EOII_2425_T2/pose" type="Folder"/>
+   <Tag name="angular_velocity" path="EOII_2425/EOII_2425_T2/pose/angular_velocity_data" type="OPC">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="OPCServer">FreeOpcUa Python Server</Property>
+      <Property name="OPCItemPath">ns=2;i=6</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+      <Property name="HistoricalDeadband">0.001</Property>
+      <Property name="SourceDataType">5</Property>
+      <EventScripts>
+         <Event id="valueChanged" enabled="true">	# STEP 1: Needed defines ---------------------------------------------------
+
+	# Declare paths to simplify code
+	angular_velocity_path = &quot;EOII_2425/EOII_2425_T2/pose/angular_velocity_data/&quot;
+
+	# STEP 2: Update the maximum velocity if applicable ------------------------
+
+	if (currentValue.value &gt; system.tag.read(
+		angular_velocity_path + &quot;angular_velocity_max&quot;).value):
+		system.tag.write(
+			angular_velocity_path + &quot;angular_velocity_max&quot;,
+			currentValue.value)
+			
+	# STEP 3: Update the minimum velocity if applicable ------------------------
+	
+	if (currentValue.value &lt; system.tag.read(
+		angular_velocity_path + &quot;angular_velocity_min&quot;).value):
+		system.tag.write(
+			angular_velocity_path + &quot;angular_velocity_min&quot;,
+			currentValue.value)
+						
+	# STEP 4: Increase the total sum of velocity -------------------------------
+	
+	system.tag.write(
+		angular_velocity_path + &quot;angular_velocity_sum&quot;,
+		system.tag.read(
+			angular_velocity_path +
+			&quot;angular_velocity_sum&quot;).value + currentValue.value)
+			
+	### end def valueChanged() ###</Event>
+      </EventScripts>
+   </Tag>
+   <Tag name="angular_velocity_average" path="EOII_2425/EOII_2425_T2/pose/angular_velocity_data" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+   </Tag>
+   <Tag name="angular_velocity_max" path="EOII_2425/EOII_2425_T2/pose/angular_velocity_data" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+   </Tag>
+   <Tag name="angular_velocity_min" path="EOII_2425/EOII_2425_T2/pose/angular_velocity_data" type="DB">
+      <Property name="Value">10,000</Property>
+      <Property name="DataType">5</Property>
+   </Tag>
+   <Tag name="angular_velocity_sum" path="EOII_2425/EOII_2425_T2/pose/angular_velocity_data" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <EventScripts>
+         <Event id="valueChanged" enabled="true">	# STEP 1: Needed defines ---------------------------------------------------
+	
+	# Declare paths to simplify code
+	cmd_vel_path = &quot;EOII_2425/EOII_2425_T2/cmd_vel/&quot;
+	angular_velocity_path = &quot;EOII_2425/EOII_2425_T2/pose/angular_velocity_data/&quot;
+	
+    # STEP 2: Read the number of times the angular velocity has been updated ---
+    
+    # The number of times the angular velocity module value has been updated
+    # matches the number of messages sent to cmd_vel, since internally when the
+    # angular_velocity data is provided in the ROS2 Pose type message, it is
+    # calculated from the components of the velocity vectors of cmd_vel
+    
+    # The frequency at which this data is updated is 0.2 s, a value set in the 
+    # turtlesim_pattern_controller.py module
+    
+    # Actually angular_velocity of Pose is updating at the same time as every
+    # other Pose value, but it is updated with repeated values since the
+    # frequency of sending pose messages is much faster than that of cmd_vel
+    # messages
+    
+	counter = system.tag.read(
+		cmd_vel_path + &quot;cmd_vel_msg_counter&quot;).value
+	
+	# STEP 3: Update the average velocity if applicable ------------------------
+	
+	if counter != 0:
+		system.tag.write(
+			angular_velocity_path + &quot;angular_velocity_average&quot;,
+			currentValue.value / counter)
+	
+	### end def valueChanged() ###
+	</Event>
+      </EventScripts>
+   </Tag>
+   <Tag name="linear_velocity_data" path="EOII_2425/EOII_2425_T2/pose" type="Folder"/>
+   <Tag name="linear_velocity" path="EOII_2425/EOII_2425_T2/pose/linear_velocity_data" type="OPC">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="OPCServer">FreeOpcUa Python Server</Property>
+      <Property name="OPCItemPath">ns=2;i=5</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+      <Property name="HistoricalDeadband">0.001</Property>
+      <Property name="SourceDataType">5</Property>
+      <EventScripts>
+         <Event id="valueChanged" enabled="true">	# STEP 1: Needed defines ---------------------------------------------------
+
+	# Declare path to simplify code
+	linear_velocity_path = &quot;EOII_2425/EOII_2425_T2/pose/linear_velocity_data/&quot;
+	
+	# STEP 2: Update the maximum velocity if applicable ------------------------
+	
+	if (currentValue.value &gt; system.tag.read(
+		linear_velocity_path + &quot;linear_velocity_max&quot;).value):
+		system.tag.write(
+			linear_velocity_path + &quot;linear_velocity_max&quot;,
+			currentValue.value)
+	
+	# STEP 3: Update the minimum velocity if applicable ------------------------
+
+	if (currentValue.value &lt; system.tag.read(
+		linear_velocity_path + &quot;linear_velocity_min&quot;).value):
+		system.tag.write(
+			linear_velocity_path + &quot;linear_velocity_min&quot;,
+			currentValue.value)
+
+	# STEP 4: Increase the total sum of velocity -------------------------------
+	
+	system.tag.write(
+		linear_velocity_path + &quot;linear_velocity_sum&quot;,
+		system.tag.read(
+			linear_velocity_path +
+			&quot;linear_velocity_sum&quot;).value + currentValue.value)
+			
+	### end def valueChanged() ###
+	</Event>
+      </EventScripts>
+   </Tag>
+   <Tag name="linear_velocity_average" path="EOII_2425/EOII_2425_T2/pose/linear_velocity_data" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+   </Tag>
+   <Tag name="linear_velocity_max" path="EOII_2425/EOII_2425_T2/pose/linear_velocity_data" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+   </Tag>
+   <Tag name="linear_velocity_min" path="EOII_2425/EOII_2425_T2/pose/linear_velocity_data" type="DB">
+      <Property name="Value">10,000</Property>
+      <Property name="DataType">5</Property>
+   </Tag>
+   <Tag name="linear_velocity_sum" path="EOII_2425/EOII_2425_T2/pose/linear_velocity_data" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <EventScripts>
+         <Event id="valueChanged" enabled="true">	# STEP 1: Needed defines ---------------------------------------------------
+	
+	# Declare paths to simplify code
+	cmd_vel_path = &quot;EOII_2425/EOII_2425_T2/cmd_vel/&quot;
+	linear_velocity_path = &quot;EOII_2425/EOII_2425_T2/pose/linear_velocity_data/&quot;
+
+    # STEP 2: Read the number of times the linear velocity has been updated ----
+    
+    # The number of times the linear velocity module value has been updated
+    # matches the number of messages sent to cmd_vel, since internally when the
+    # linear_velocity data is provided in the ROS2 Pose type message, it is
+    # calculated from the components of the velocity vectors of cmd_vel
+    
+    # The frequency at which this data is updated is 0.2 s, a value set in the 
+    # turtlesim_pattern_controller.py module
+    
+    # Actually linear_velocity of Pose is updating at the same time as every
+    # other Pose value, but it is updated with repeated values since the
+    # frequency of sending pose messages is much faster than that of cmd_vel
+    # messages
+	
+	counter = system.tag.read(
+    	cmd_vel_path + &quot;cmd_vel_msg_counter&quot;).value
+	
+	# STEP 3: Update the average velocity if applicable ------------------------
+
+	if counter != 0:
+		system.tag.write(
+			linear_velocity_path + &quot;linear_velocity_average&quot;,
+			currentValue.value / counter)
+		
+	### end def valueChanged() ###
+	</Event>
+      </EventScripts>
+   </Tag>
+   <Tag name="orientation" path="EOII_2425/EOII_2425_T2/pose" type="OPC">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="OPCServer">FreeOpcUa Python Server</Property>
+      <Property name="OPCItemPath">ns=2;i=4</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+      <Property name="HistoricalDeadband">0.001</Property>
+      <Property name="SourceDataType">5</Property>
+      <EventScripts>
+         <Event id="valueChanged" enabled="true">	# STEP 1: Needed defines ---------------------------------------------------
+
+	# Declare path to simplify code
+	pose_path = &quot;EOII_2425/EOII_2425_T2/pose/&quot;
+	
+	# STEP 2: Read orientation OPC Tag -----------------------------------------
+
+	raw_orientation = currentValue.value
+	
+	# STEP 3: Calculate Orientation for Compass --------------------------------
+	
+	if raw_orientation &gt;= 0.0:
+		orientation_for_compasss = 90 - (raw_orientation / 3.0) * 180
+	else:
+		orientation_for_compasss = 90 + (raw_orientation / -3.0) * 180
+	
+	# STEP 4: Update Memory Tag ------------------------------------------------
+
+	system.tag.write(
+		pose_path + &quot;orientation_for_compass&quot;,
+		orientation_for_compasss)
+		
+	### end def valueChanged() ###
+	</Event>
+      </EventScripts>
+   </Tag>
+   <Tag name="orientation_for_compass" path="EOII_2425/EOII_2425_T2/pose" type="DB">
+      <Property name="Value">90</Property>
+      <Property name="DataType">5</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+   </Tag>
+   <Tag name="pose_msg_counter" path="EOII_2425/EOII_2425_T2/pose" type="OPC">
+      <Property name="Value">0</Property>
+      <Property name="DataType">3</Property>
+      <Property name="OPCServer">FreeOpcUa Python Server</Property>
+      <Property name="OPCItemPath">ns=2;i=2</Property>
+      <Property name="SourceDataType">3</Property>
+      <EventScripts>
+         <Event id="valueChanged" enabled="true">	# STEP 1: Needed defines ---------------------------------------------------
+
+	# Declare paths to simplify code
+	pose_path = &quot;EOII_2425/EOII_2425_T2/pose/&quot;
+	angular_velocity_path = pose_path + &quot;angular_velocity_data/&quot;
+	linear_velocity_path  = pose_path + &quot;linear_velocity_data/&quot;
+	
+	# STEP 2: If the server has been restarted, reset Memory Tags --------------
+	
+	if previousValue.value &gt; currentValue.value or currentValue.value == 0:
+	
+		# Reset Position and Orientation Memory Tags ---------------------------
+		
+		system.tag.write(
+			pose_path + &quot;orientation_for_compass&quot;,
+			90.0)
+		system.tag.write(
+			pose_path + &quot;position_x&quot;,
+			0.0)
+		system.tag.write(
+			pose_path + &quot;position_y&quot;,
+			0.0)
+		system.tag.write(
+			pose_path + &quot;traveled_distance&quot;,
+			0.0)
+
+		# Reset Linear Velocity Memory Tags ------------------------------------
+
+		system.tag.write(
+			linear_velocity_path + &quot;linear_velocity_average&quot;,
+			0.0)
+		system.tag.write(
+			linear_velocity_path + &quot;linear_velocity_max&quot;,
+			0.0)
+		system.tag.write(
+			linear_velocity_path + &quot;linear_velocity_min&quot;,
+			10000.0)
+		system.tag.write(
+			linear_velocity_path + &quot;linear_velocity_sum&quot;,
+			0.0)
+
+		# Reset Angular Velocity Memory Tags -----------------------------------
+
+		system.tag.write(
+			angular_velocity_path + &quot;angular_velocity_average&quot;,
+			0.0)
+		system.tag.write(
+			angular_velocity_path + &quot;angular_velocity_max&quot;,
+			0.0)
+		system.tag.write(
+			angular_velocity_path + &quot;angular_velocity_min&quot;,
+			10000.0)
+		system.tag.write(
+			angular_velocity_path + &quot;angular_velocity_sum&quot;,
+			0.0)
+
+	### end def valueChanged() ###
+	</Event>
+      </EventScripts>
+   </Tag>
+   <Tag name="position_vector" path="EOII_2425/EOII_2425_T2/pose" type="OPC">
+      <Property name="Value">
+         <Dataset>
+            <columns>
+               <col name="VALUES" datatype="Float8"/>
+            </columns>
+            <rows>
+               <row>
+                  <cell>0</cell>
+               </row>
+               <row>
+                  <cell>0</cell>
+               </row>
+            </rows>
+         </Dataset>
+      </Property>
+      <Property name="DataType">13</Property>
+      <Property name="OPCServer">FreeOpcUa Python Server</Property>
+      <Property name="OPCItemPath">ns=2;i=3</Property>
+      <Property name="SourceDataType">13</Property>
+      <EventScripts>
+         <Event id="valueChanged" enabled="true">	# STEP 1: Needed imports and defines ---------------------------------------
+	
+	# Needed import to calculate the traveled distance
+	from math import sqrt
+	
+	# Declare path to simplify code
+	pose_path = &quot;EOII_2425/EOII_2425_T2/pose/&quot;
+	
+	# STEP 2: Read position_vector OPC Tag -------------------------------------
+	
+	# Read previous Turtle Coordinates
+	prev_x = previousValue.value[0]
+	prev_y = previousValue.value[1]
+	
+	# Read current Turtle Coordinates
+	new_x = currentValue.value[0]
+	new_y = currentValue.value[1]
+	
+	# STEP 3: Calculate Traveled Distance --------------------------------------
+	
+	# Read previous Traveled Distance
+	traveled_distance = system.tag.read(
+		pose_path + &quot;traveled_distance&quot;).value
+	
+	# Calculate new approximate Traveled Distance
+	traveled_distance = (traveled_distance +
+		sqrt((new_x - prev_x)**2 + (new_y - prev_y)**2))
+	
+	# STEP 4: Update Memory Tags -----------------------------------------------
+	
+	# Update new Traveled Distance
+	system.tag.write(
+		pose_path + &quot;traveled_distance&quot;,
+		traveled_distance)
+	
+	# Update new x coordinate
+	system.tag.write(
+		pose_path + &quot;position_x&quot;,
+		new_x)
+	
+	# Update new y coordinate
+	system.tag.write(
+		pose_path + &quot;position_y&quot;,
+		new_y)
+		
+	### end def valueChanged() ###
+	</Event>
+      </EventScripts>
+   </Tag>
+   <Tag name="position_x" path="EOII_2425/EOII_2425_T2/pose" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="ScanClass">Default Historical</Property>
+      <Property name="HistoryEnabled">true</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+      <Property name="HistoricalDeadband">0.001</Property>
+   </Tag>
+   <Tag name="position_y" path="EOII_2425/EOII_2425_T2/pose" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+      <Property name="ScanClass">Default Historical</Property>
+      <Property name="HistoryEnabled">true</Property>
+      <Property name="PrimaryHistoryProvider">PostgreSQL</Property>
+      <Property name="HistoricalDeadband">0.001</Property>
+   </Tag>
+   <Tag name="traveled_distance" path="EOII_2425/EOII_2425_T2/pose" type="DB">
+      <Property name="Value">0</Property>
+      <Property name="DataType">5</Property>
+   </Tag>
+</Tags>
