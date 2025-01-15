@@ -15,7 +15,6 @@
 import json                          # For handling JSON data
 import logging                       # For logging messages
 import sys                           # For using exit() function
-from time import sleep, time         # For sleep function
 
 import paho.mqtt.client as mqtt      # For MQTT communication
 import rclpy                         # ROS 2 client library
@@ -43,7 +42,7 @@ logger = logging.getLogger("communication_node")
 # ---------------------------------------------------------------------------- #
 # PARAMETERS AND TOPICS FOR CONNECTION WITH MQTT
 
-IP_ADDRESS         = "192.168.1.145"   # IP address of the MQTT broker
+IP_ADDRESS         = "???"             # IP address of the MQTT broker
 PORT               = 1883              # Port number for the MQTT broker
 MQTT_POSE_TOPIC    = "turtle/pose"     # Topic for turtle pose messages
 MQTT_CMD_VEL_TOPIC = "turtle/cmd_vel"  # Topic for turtle velocity commands
@@ -108,12 +107,6 @@ class CommunicationBridge(Node):
         self.publisher.subscribe(MQTT_POSE_TOPIC)
         self.publisher.subscribe(MQTT_CMD_VEL_TOPIC)
 
-        # Publication times and intervals
-        self.pose_last_time       = 0.0  # Last pose publication time
-        self.cmd_vel_last_time    = 0.0  # Last cmd_vel publication time
-        self.pose_pub_interval    = 0.2  # Pose publication interval (sec)
-        self.cmd_vel_pub_interval = 0.2  # cmd_vel publication interval (sec)
-
         # Start the MQTT client loop
         self.publisher.loop_start()
 
@@ -145,37 +138,30 @@ class CommunicationBridge(Node):
         """
         Callback function for the "turtle1/pose" topic.
         """
-        currentTime = time()
+        # Generate JSON message with pose data
+        pose_data = {
+            "position": [msg.x, msg.y],
+            "orientation": msg.theta,
+            "linear_velocity": msg.linear_velocity,
+            "angular_velocity": msg.angular_velocity
+        }
+        
+        try:
+            pose_msg = json.dumps(pose_data)
 
-        # if currentTime - self.pose_last_time >= self.pose_pub_interval:
-        if True:
-            # Update the last publication time
-            self.pose_last_time = currentTime
+            # Publish the message to the corresponding MQTT topic
+            self.publisher.publish(MQTT_POSE_TOPIC, pose_msg)
 
-            # Generate JSON message with pose data
-            pose_data = {
-                "position": [msg.x, msg.y],
-                "orientation": msg.theta,
-                "linear_velocity": msg.linear_velocity,
-                "angular_velocity": msg.angular_velocity
-            }
+            # Log the published message
+            logger.info(
+                f"New message sent via MQTT to '{MQTT_POSE_TOPIC}'")
+            logger.debug(
+                f"Message content: {pose_msg}")
             
-            try:
-                pose_msg = json.dumps(pose_data)
-
-                # Publish the message to the corresponding MQTT topic
-                self.publisher.publish(MQTT_POSE_TOPIC, pose_msg)
-
-                # Log the published message
-                logger.info(
-                    f"New message sent via MQTT to '{MQTT_POSE_TOPIC}'")
-                logger.debug(
-                    f"Message content: {pose_msg}")
-                
-            except Exception as err:
-                # Log an error if the message fails to publish
-                logger.error(
-                    f"Failed to publish pose message: {err}")
+        except Exception as err:
+            # Log an error if the message fails to publish
+            logger.error(
+                f"Failed to publish pose message: {err}")
 
         ### end def pose_callback() ###
 
@@ -183,35 +169,28 @@ class CommunicationBridge(Node):
         """
         Callback function for the "turtle1/cmd_vel" topic.
         """
-        currentTime = time()
+        # Generate JSON message with cmd_vel data
+        cmd_vel_data = {
+            "linear": [msg.linear.x, msg.linear.y, msg.linear.z],
+            "angular": [msg.angular.x, msg.angular.y, msg.angular.z]
+        }
 
-        # if currentTime - self.cmd_vel_last_time >= self.cmd_vel_pub_interval:
-        if True:
-            # Update the last publication time
-            self.cmd_vel_last_time = currentTime
-
-            # Generate JSON message with cmd_vel data
-            cmd_vel_data = {
-                "linear": [msg.linear.x, msg.linear.y, msg.linear.z],
-                "angular": [msg.angular.x, msg.angular.y, msg.angular.z]
-            }
-
-            try:
-                cmd_vel_msg = json.dumps(cmd_vel_data)
-                 
-                # Publish the message to the corresponding MQTT topic
-                self.publisher.publish(MQTT_CMD_VEL_TOPIC, cmd_vel_msg)
-
-                # Log the published message
-                logger.info(
-                    f"New message sent via MQTT to '{MQTT_CMD_VEL_TOPIC}'")
-                logger.debug(
-                    f"Message content: {cmd_vel_msg}")
+        try:
+            cmd_vel_msg = json.dumps(cmd_vel_data)
                 
-            except Exception as err:
-                # Log an error if the message fails to publish
-                logger.error(
-                    f"Failed to publish cmd_vel message: {err}")
+            # Publish the message to the corresponding MQTT topic
+            self.publisher.publish(MQTT_CMD_VEL_TOPIC, cmd_vel_msg)
+
+            # Log the published message
+            logger.info(
+                f"New message sent via MQTT to '{MQTT_CMD_VEL_TOPIC}'")
+            logger.debug(
+                f"Message content: {cmd_vel_msg}")
+            
+        except Exception as err:
+            # Log an error if the message fails to publish
+            logger.error(
+                f"Failed to publish cmd_vel message: {err}")
 
         ### end def cmd_vel_callback() ###
 
